@@ -181,3 +181,520 @@ I created a **basic chat application** using **Node.js** and **Socket.IO**. The 
 ![osi](https://github.com/yasmeen-taj111/images/blob/main/socketio.jpeg?raw=true)
 
 ---
+
+
+
+# TASK 4: WORKING OF VERSION CONTROL
+
+## INTRODUCTION
+
+Version Control is a system that helps us save and track changes made to files over time.  
+It allows us to return to previous versions, work in teams, and manage projects easily.
+
+Git is a widely used version control tool that helps developers handle code efficiently.
+
+---
+
+## BASIC CONCEPTS OF VERSION CONTROL
+
+### Repository
+A repository is a place where project files and their history are stored.  
+It can be:
+- Local repository (on our computer)
+- Remote repository (on GitHub or GitLab)
+
+### Commit
+A commit is used to save changes made to files.  
+Each commit has a unique ID and a message describing the changes.
+
+### Branch
+A branch allows us to work on new features without affecting the main code.
+
+### Merge
+Merge is used to combine changes from one branch into another.
+
+---
+
+## INSTALLING AND INITIALIZING GIT
+
+To check if Git is installed:
+```bash
+git --version
+```
+
+## INITIALIZING A NEW REPOSITORY
+```bash
+git init
+```
+
+
+---
+
+## GIT COMMANDS PRACTICED
+
+### 1. `git branch`
+
+The `git branch` command is used to **create and manage branches**.
+
+**Create a new branch**
+
+`git branch branch-name` 
+
+**List all branches**
+
+`git branch` 
+
+**Create and switch to a branch**
+
+`git checkout -b branch-name` 
+
+**Switch between branches**
+
+`git checkout branch-name` 
+
+
+----------
+
+### 2. `git merge`
+
+The `git merge` command is used to **merge one branch into the current branch**.
+
+**Syntax**
+
+`git merge branch-name` 
+
+This command combines the changes from the given branch into the active branch.
+
+
+    
+
+----------
+
+### 3. `git revert`
+
+The `git revert` command is used to **undo a commit safely**.
+
+**Syntax**
+
+`git revert commit-hash` 
+
+It creates a new commit that reverses the changes made by a previous commit.
+
+
+
+----------
+
+### 4. `git cherry-pick`
+
+The `git cherry-pick` command is used to **apply a specific commit** from another branch.
+
+**Syntax**
+
+`git cherry-pick commit-hash` 
+
+This command is useful when only a particular commit is required.
+
+📸 _Screenshots:_
+![osi](https://github.com/yasmeen-taj111/images/blob/main/git1.jpeg?raw=true)
+
+![osi](https://github.com/yasmeen-taj111/images/blob/main/git2.jpeg?raw=true)
+
+![osi](https://github.com/yasmeen-taj111/images/blob/main/git3.jpeg?raw=true)
+
+
+
+
+
+
+
+
+
+
+
+----------
+
+# Task 5: DYNAMODB
+
+## 1. INTRODUCTION
+
+This project demonstrates a **secure user login system** implemented using **AWS DynamoDB**. The system allows users to **register** and **log in** using email and password credentials. Passwords are securely stored using **hashing**, ensuring data security.
+
+**Technologies Used:**
+
+-   Python 3
+    
+   
+-   AWS DynamoDB (NoSQL Database)
+    
+-   Boto3 (AWS SDK for Python)
+    
+-   bcrypt (for password hashing)
+    
+
+----------
+
+## 2. OBJECTIVES
+
+-   Understand the basics of **NoSQL databases** and how DynamoDB works.
+    
+-   Implement a **secure registration and login system**.
+    
+-   Learn to interact with AWS services using **Boto3**.
+    
+-   Compare **SQL vs NoSQL** databases and understand their use cases.
+    
+
+----------
+
+## 3. DYNAMODB OVERVIEW
+
+**Amazon DynamoDB** is a fully managed **NoSQL database** service. It provides:
+
+-   **Scalability:** Handles traffic from a few requests per second to millions without manual intervention.
+    
+-   **Performance:** Offers low-latency read and write operations.
+    
+-   **Flexible Schema:** Supports different data structures, unlike rigid SQL tables.
+    
+-   **Integration:** Works seamlessly with other AWS services.
+    
+
+**Key Concepts:**
+
+-   **Table:** Collection of items (similar to SQL tables).
+    
+-   **Item:** Individual records in a table (like rows in SQL).
+    
+-   **Attributes:** Fields of an item (like columns in SQL).
+    
+-   **Primary Key:** Uniquely identifies each item.
+    
+
+----------
+
+## 4. DIFFERENCE BETWEEN MYSQL AND NOSQL
+
+| Feature        | MySQL               | NoSQL (DynamoDB)      |
+|----------------|-------------------|----------------------|
+| Data Structure | Rows and Columns (Tables) | Key-Value / Document  |
+| Schema         | Fixed              | Flexible             |
+| Query Language | SQL                | Varies / API calls   |
+| Scalability    | Vertical           | Horizontal           |
+
+----------
+
+## 5. SYSTEM WORKFLOW
+
+### 5.1 Registration
+
+1.  User enters **email** and **password**.
+    
+2.  Password is **hashed** using bcrypt.
+    
+3.  User credentials are stored in DynamoDB table `signup_page`.
+    
+
+**Example Output:**
+
+```
+Enter email: yasmeen_taj
+Enter password: 1234
+SUCCESS: User yasmeen_taj registered with a hashed password.
+
+```
+
+### 5.2 Login
+
+1.  User enters **email** and **password**.
+    
+2.  System retrieves the hashed password from DynamoDB.
+    
+3.  Password is verified against the hash.
+    
+4.  User is granted access if credentials match.
+    
+
+**Example Outputs:**
+
+```
+Enter email: yasmeen_taj
+Enter password: 1234
+WELCOME: Login successful for yasmeen_taj!
+
+```
+
+```
+Enter email: yasmeen_taj
+Enter password: 123
+FAILED: Invalid email or password.
+
+```
+
+----------
+
+
+## 6. IMPLEMENTATION DETAILS
+
+**File Structure:**
+
+```
+user-login-system/
+├── app.py              # Main program (CLI or Flask interface)
+├── auth_service.py     # Handles registration and login logic
+├── database.py         # DynamoDB connection setup using Boto3
+├── requirements.txt    # Python dependencies
+└── .env                # Environment variables (AWS keys)
+
+```
+
+**Python Libraries Used:**
+
+-   `boto3` – AWS SDK to interact with DynamoDB
+    
+-   `bcrypt` – For secure password hashing
+    
+-   `python-dotenv` – Load AWS credentials from `.env` file
+    
+
+**Key Code Snippets:**
+
+# Hashing password
+hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+# Verifying password
+```
+if bcrypt.checkpw(input_password.encode('utf-8'), stored_hash.encode('utf-8')):
+    print("Login successful")
+else:
+    print("Invalid credentials") 
+
+```
+
+----------
+
+## 7. TERMINAL OUTPUTS
+
+**Login Attempts:**
+
+-   Correct password → Login successful.
+    
+-   Incorrect password → Login failed.
+    
+-   Multiple users supported.
+    
+
+----------
+
+## 8. LEARNING OUTCOMES
+
+-   Learned to set up **AWS CLI** and configure credentials.
+    
+-   Learned to use **Boto3** for CRUD operations in DynamoDB.
+    
+-   Implemented **secure password storage** using bcrypt.
+    
+-   Understood **differences between SQL and NoSQL** databases.
+    
+-   Developed a **working user login system**.
+    
+
+----------
+
+## ScreenShote
+
+![osi](https://github.com/yasmeen-taj111/images/blob/main/db1.jpeg?raw=true)
+![osi](https://github.com/yasmeen-taj111/images/blob/main/db2.jpeg?raw=true)
+
+
+
+
+
+## GITHUB REPOSITORY
+
+Github project repository:  
+[https://github.com/yasmeen-taj111/dynamodb-user-login-system](https://github.com/yasmeen-taj111/dynamodb-user-login-system)
+
+----------
+
+
+
+
+
+
+
+# TASK 7: Encryption Techniques - Secure Messaging App
+
+## 1. Introduction
+
+Encryption protects messages by converting plaintext into ciphertext, ensuring only authorized users can read them. This project demonstrates secure messaging using **AES (Advanced Encryption Standard)** in Python, allowing messages to be encrypted before sending and decrypted upon receipt.
+
+----------
+
+## 2. Encryption Techniques
+
+### AES (Symmetric Encryption)
+
+-   Uses a **single secret key** for encryption and decryption.
+    
+-   Fast and secure for message transmission.
+    
+-   Process:
+    
+    1.  Sender encrypts plaintext with the secret key → ciphertext.
+        
+    2.  Ciphertext is transmitted over the network.
+        
+    3.  Receiver decrypts it using the same key → original message.
+        
+
+**Other ciphers learned:** Caesar, Vigenère, and Substitution. These are simpler but less secure.
+
+
+### Symmetric vs Asymmetric Encryption
+
+| Feature      | Symmetric (AES)        | Asymmetric (RSA)                   |
+|--------------|------------------------|------------------------------------|
+| Keys Used    | 1 (same key)           | 2 (public & private)               |
+| Security     | Key must be shared securely | Public key can be shared openly |
+| Use Case     | Messaging              | Digital signatures, key exchange   |
+
+**RSA** relies on large prime numbers to generate secure public–private key pairs.
+
+
+----------
+
+## 3. Project Implementation
+
+-   Python libraries: `PyCryptodome`, `base64`.
+    
+-   Functions:
+    
+    -   **Encrypt message:** Converts plaintext → ciphertext.
+        
+    -   **Decrypt message:** Converts ciphertext → original plaintext.
+        
+
+**Sample Run:**
+
+```
+Message: Hello World
+Encrypted: yvyhyEf2469lW35wQ8+ZvyjmSsiWJ5000sWtjU/6Zsc=
+Decrypted: Hello World
+
+```
+
+----------
+
+## 4. Conclusion
+
+-   AES encryption ensures secure communication over insecure networks.
+    
+-   RSA introduces asymmetric encryption for secure key exchange.
+    
+-   Classic ciphers provide foundational understanding but are not practical for modern security.
+    
+-   This project forms a strong base for building **secure chat applications**.
+    
+
+**GitHub:** [Encryption Chat Box](https://github.com/yasmeen-taj111/Encryption-Chat-box)
+
+----------
+
+![osi](https://github.com/yasmeen-taj111/images/blob/main/en1.jpeg?raw=true)
+![osi](https://github.com/yasmeen-taj111/images/blob/main/en2.jpeg?raw=true)
+
+
+
+
+
+
+
+
+
+
+
+
+# TASK 7: IP Addressing and Web Scraping – Job Listings Scraper
+
+## Objective
+The objective of this task was to understand **web scraping using Python** and relate it to **IP addressing and TCP/IP protocols**. Using the `requests` and `BeautifulSoup` libraries, a scraper was developed to extract structured data from a website and store it in a CSV file.
+
+---
+
+## Tools & Technologies Used
+- **Python**
+- **requests** – to send HTTP requests
+- **BeautifulSoup (bs4)** – to parse HTML content
+- **CSV module** – to store extracted data
+
+
+---
+
+## Implementation Overview
+- A GET request is sent to the website using the `requests` library.
+- The HTML response is parsed using **BeautifulSoup**.
+- Book details such as **Title, Price, and Availability** are extracted.
+- The top 10 records are stored in an `output.csv` file.
+
+``` python
+requests.get(url)
+```
+
+This line internally uses TCP/IP protocols to establish a connection between the client and server using IP addresses.
+
+
+---
+
+Sample Extracted Data (output.csv)
+
+
+| Title                  | Price  | Availability |
+|------------------------|--------|--------------|
+| A Light in the Attic    | £51.77 | In stock     |
+| Tipping the Velvet    | £53.74 | In stock     |
+| Soumission             | £50.10 | In stock     |
+
+
+
+
+---
+
+IP Addressing & TCP/IP Relevance
+
+Each HTTP request sent by the scraper uses the IP address of the target server.
+
+TCP ensures reliable data transfer.
+
+IP handles routing of data packets between client and server.
+
+This demonstrates how web applications rely on networking fundamentals.
+
+
+
+---
+
+Conclusion
+
+This task successfully demonstrated:
+
+Practical web scraping using BeautifulSoup
+
+Data extraction and storage in CSV format
+
+Real-world application of IP addressing and TCP/IP protocols
+
+
+The project reinforces both networking concepts and Python automation skills, forming a strong foundation for advanced scraping and data analysis tasks.
+
+
+---
+
+GitHub Repository
+
+🔗 https://github.com/yasmeen-taj111/WebScraping
+
+
+![osi](https://github.com/yasmeen-taj111/images/blob/main/sc1.jpeg?raw=true)
+
+
+

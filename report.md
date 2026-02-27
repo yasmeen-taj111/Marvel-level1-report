@@ -522,7 +522,7 @@ Github project repository:
 
 
 
-# TASK 7: Encryption Techniques - Secure Messaging App
+# TASK 6: Encryption Techniques - Secure Messaging App
 
 ## 1. Introduction
 
@@ -696,5 +696,118 @@ GitHub Repository
 
 ![osi](https://github.com/yasmeen-taj111/images/blob/main/sc1.jpeg?raw=true)
 
+
+---
+
+
+
+# **Task 8: Creating and Deploying an Application on EC2**
+
+## **Objective**
+
+To launch and configure an EC2 instance on AWS and deploy a dynamic backend application.
+
+## **Implementation Summary**
+
+An EC2 instance was created using Ubuntu 22.04 LTS with a `t3.micro` instance type. Security Groups were configured to allow SSH (22) and application traffic (8000).
+
+The FastAPI backend of the **Geo Rep Lookup** project was cloned from GitHub and deployed on the instance. A Python virtual environment was created, dependencies were installed using `requirements.txt`, and the application was run using Uvicorn.
+
+## **Outcome**
+
+The backend API was successfully deployed and accessed publicly via the EC2 public IP address. This task provided practical experience in EC2 instance management, server configuration, and deploying a dynamic backend application in the cloud.
+
+
+![fastapi](https://github.com/yasmeen-taj111/images/blob/main/terminal.jpeg?raw=true)
+![terminal](https://github.com/yasmeen-taj111/images/blob/main/WhatsApp%20Image%202026-02-27%20at%2007.25.55.jpeg?raw=true)
+---
+
+# **TASK 9: AWS CloudFront - Serve content from multiple S3 buckets**
+
+## **Objective**
+
+To configure Amazon CloudFront to securely serve content from multiple Amazon S3 buckets using path-based routing and Origin Access Control (OAC).
+
+---
+
+## **Services Used**
+
+* Amazon S3
+* Amazon CloudFront
+* Origin Access Control (OAC)
+
+---
+
+## **Architecture**
+
+User → CloudFront →
+• S3 Bucket 1 (HTML, CSS, JS)
+• S3 Bucket 2 (Images)
+
+CloudFront routes traffic based on path patterns:
+
+* Default (*) → Main website bucket
+* `images/*` → Images bucket
+
+---
+
+## **Implementation Summary**
+
+1. Created two S3 buckets:
+
+   * Static website bucket (HTML, CSS, JS)
+   * Images bucket (media files)
+
+2. Created a CloudFront distribution with both buckets as origins.
+
+3. Configured behavior:
+
+   * Default behavior → Main bucket
+   * `images/*` behavior → Images bucket
+
+4. Enabled **Origin Access Control (OAC)** to securely allow CloudFront to access private S3 buckets.
+
+5. Added bucket policies allowing access only from the specific CloudFront distribution.
+
+---
+
+## **Issue Faced**
+
+Images returned **AccessDenied** error.
+
+### Cause:
+
+Images bucket origin was set to Public instead of OAC.
+
+### Resolution:
+
+Attached Origin Access Control to the images origin and updated bucket policy. After deployment, all assets loaded successfully.
+
+---
+
+## **Result**
+
+The website successfully:
+
+* Loads HTML, CSS, and JS from Bucket 1
+* Loads images from Bucket 2
+* Restricts direct public access to S3
+* Delivers content securely via CloudFront
+
+---
+
+## **Conclusion**
+
+This project demonstrates secure multi-origin configuration using Amazon CloudFront and Amazon S3 with path-based routing and Origin Access Control, following best practices for scalable and secure static website hosting.
+
+![s3 bucket](https://github.com/yasmeen-taj111/images/blob/main/s3%20aws.jpeg?raw=true)
+![static](https://github.com/yasmeen-taj111/images/blob/main/static%20s3.jpeg?raw=true)
+
+
+---
+
+
+
+I
 
 
